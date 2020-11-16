@@ -16,7 +16,7 @@ async function run() {
 
     console.log(' drop tables complete', getEmoji(), getEmoji(), getEmoji());
   }
-  catch (err) {
+  catch(err) {
     console.log(err);
   }
   finally {

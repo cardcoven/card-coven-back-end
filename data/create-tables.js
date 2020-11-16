@@ -5,7 +5,6 @@ const { getEmoji } = require('../lib/emoji.js');
 run();
 
 async function run() {
-
   try {
     // initiate connecting to db
     await client.connect();
@@ -16,24 +15,29 @@ async function run() {
                     id SERIAL PRIMARY KEY,
                     email VARCHAR(256) NOT NULL,
                     hash VARCHAR(512) NOT NULL
-                );           
-                CREATE TABLE animals (
+                );  
+                CREATE TABLE cards (
+                  id SERIAL PRIMARY KEY NOT NULL,
+                  card_name VARCHAR(512) NOT NULL,
+                  img_url VARCHAR(512) NOT NULL,
+                  owner_id INTEGER NOT NULL REFERENCES users(id)
+          );         
+                CREATE TABLE decks (
                     id SERIAL PRIMARY KEY NOT NULL,
-                    name VARCHAR(512) NOT NULL,
-                    cool_factor INTEGER NOT NULL,
+                    deck_name VARCHAR(512) NOT NULL,
+                    deck_description VARCHAR(512) NOT NULL,
+                    deck_type BOOLEAN NOT NULL,
+                    card_id INTEGER NOT NULL REFERENCES cards(id),
                     owner_id INTEGER NOT NULL REFERENCES users(id)
-            );
+            );               
         `);
 
     console.log('create tables complete', getEmoji(), getEmoji(), getEmoji());
-  }
-  catch(err) {
+  } catch(err) {
     // problem? let's see the error...
     console.log(err);
-  }
-  finally {
+  } finally {
     // success or failure, need to close the db connection
     client.end();
   }
-
 }

@@ -16,20 +16,22 @@ async function run() {
                     email VARCHAR(256) NOT NULL,
                     hash VARCHAR(512) NOT NULL
                 );  
-                CREATE TABLE cards (
-                  id SERIAL PRIMARY KEY NOT NULL,
-                  card_name VARCHAR(512) NOT NULL,
-                  img_url VARCHAR(512) NOT NULL,
-                  owner_id INTEGER NOT NULL REFERENCES users(id)
-          );         
                 CREATE TABLE decks (
                     id SERIAL PRIMARY KEY NOT NULL,
                     deck_name VARCHAR(512) NOT NULL,
                     deck_description VARCHAR(512) NOT NULL,
                     deck_type BOOLEAN NOT NULL,
-                    card_id INTEGER NOT NULL REFERENCES cards(id),
                     owner_id INTEGER NOT NULL REFERENCES users(id)
             );               
+                CREATE TABLE cards (
+                  id SERIAL PRIMARY KEY NOT NULL,
+                  card_name VARCHAR(512) NOT NULL,
+                  card_colors VARCHAR(512) NOT NULL,
+                  card_type VARCHAR(512) NOT NULL,
+                  img_url VARCHAR(512) NOT NULL,
+                  deck_id INTEGER NOT NULL REFERENCES decks(id),
+                  owner_id INTEGER NOT NULL REFERENCES users(id)
+          );         
         `);
 
     console.log('create tables complete', getEmoji(), getEmoji(), getEmoji());

@@ -19,7 +19,7 @@ async function run() {
                       VALUES ($1, $2)
                       RETURNING *;
                   `,
-          [user.email, user.hash]);
+        [user.email, user.hash]);
       })
     );
 
@@ -28,20 +28,20 @@ async function run() {
     await Promise.all(
       decks.map(deck => {
         return client.query(`
-                    INSERT INTO decks (deck_name, deck_description, deck_type, card_id, owner_id)
-                    VALUES ($1, $2, $3, $4 , $5);
+                    INSERT INTO decks (deck_name, deck_description, deck_type, owner_id)
+                    VALUES ($1, $2, $3, $4);
                 `,
-          [deck.deck_name, deck.deck_description, true, deck.card_id, user.id]);
+        [deck.deck_name, deck.deck_description, true, user.id]);
       })
     );
 
     await Promise.all(
       cards.map(card => {
         return client.query(`
-                    INSERT INTO decks (card_name, img_url, owner_id)
-                    VALUES ($1, $2, $3);
+                    INSERT INTO cards (card_name, card_colors, card_type, img_url, deck_id, owner_id)
+                    VALUES ($1, $2, $3, $4, $5, $6);
                 `,
-          [card.card_name, card.img_url, user.id]);
+        [card.name, card.colors, card.type, card.imageUrl, card.deck_id, user.id]);
       })
     );
 

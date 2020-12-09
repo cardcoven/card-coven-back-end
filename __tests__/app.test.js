@@ -31,6 +31,7 @@ describe('app routes', () => {
       return client.end(done);
     });
 
+    // would have liked to see these endpoints tested
     test('returns animals', async() => {
 
       const expectation = [
